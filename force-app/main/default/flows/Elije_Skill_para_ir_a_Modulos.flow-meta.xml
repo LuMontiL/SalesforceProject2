@@ -2,19 +2,19 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
     <assignments>
-        <name>Skill_Elegida</name>
-        <label>Skill Elegida</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <name>assign_name</name>
+        <label>assign name</label>
+        <locationX>270</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>Elegida</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>Name</assignToReference>
+            <operator>Add</operator>
             <value>
-                <elementReference>Skills_disponibles</elementReference>
+                <elementReference>loop_modules.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Trae_modulo</targetReference>
+            <targetReference>loop_modules</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -89,9 +89,56 @@
             <stringValue>Security</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Are_there_any_modules</name>
+        <label>Are there any modules?</label>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Modulos</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>YES</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Trae_modulo</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Modulos1</targetReference>
+            </connector>
+            <label>YES</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>Modules1</name>
+        <collectionReference>Trae_modulo</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>Modulo__c</object>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Elije Skill para ir a Modulos {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Elije Skill para ir a Modulos</label>
+    <loops>
+        <name>loop_modules</name>
+        <label>loop modules</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <collectionReference>Trae_modulo</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>assign_name</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Are_there_any_modules</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -114,50 +161,56 @@
     <recordLookups>
         <name>Trae_modulo</name>
         <label>Trae modulo</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Muestra_Modulos_Relacionados</targetReference>
+            <targetReference>loop_modules</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Skill__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Elegida</elementReference>
+                <elementReference>Skills_disponibles</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Modulo__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Muestra_Modulos_Relacionados</name>
-        <label>Muestra Modulos Relacionados</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <name>Copy_1_of_Modulos</name>
+        <label>Copy 1 of Modulos</label>
+        <locationX>314</locationX>
+        <locationY>854</locationY>
         <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
         <fields>
-            <name>Modulo</name>
-            <extensionName>flowruntime:url</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>Trae_modulo.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>readonly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
+            <name>NoHayModulos</name>
+            <fieldText>&lt;p&gt;No hay modulos relacionados a este Skill. Intente volver atras y seleccionar otra. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Modulos1</name>
+        <label>Modulos</label>
+        <locationX>50</locationX>
+        <locationY>854</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Modules_Related</name>
+            <choiceReferences>Modules1</choiceReferences>
+            <extensionName>flowruntime:choiceLookup</extensionName>
+            <fieldText>Modules Related</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
@@ -166,13 +219,13 @@
     <screens>
         <name>Pantalla</name>
         <label>Pantalla</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Skill_Elegida</targetReference>
+            <targetReference>Trae_modulo</targetReference>
         </connector>
         <fields>
             <name>Skills_disponibles</name>
@@ -194,7 +247,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Pantalla</targetReference>
@@ -209,11 +262,10 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>Modulos</name>
-        <dataType>SObject</dataType>
+        <name>Name</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Modulo__c</objectType>
     </variables>
 </Flow>
