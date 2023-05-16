@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Modulos_Totales__c</fullName>
+    <externalId>false</externalId>
+    <label>Modulos Totales</label>
+    <summaryForeignKey>Trail_Modulo__c.Trail__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>
