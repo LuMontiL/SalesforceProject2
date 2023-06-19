@@ -19,6 +19,38 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Educadores</label>
     <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trail_Record_Page3</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Trail__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trail_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trail__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trail_Record_Page3</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Trail__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Educador</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trail_Record_Page3</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trail__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Educador</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>Trail__c</tabs>
     <tabs>Modulo__c</tabs>

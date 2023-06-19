@@ -33,18 +33,18 @@ public class UnitServiceTest {
             Es_Correcta__c = 'Si'
         );
         insert option;
-        
+       /* 
         User_Respuesta__c questionResponse = new User_Respuesta__c(
             Pregunta__c = question.id,
             Respuesta__c = option.id
         );
-        insert questionResponse;
+        insert questionResponse;*/
 
         
         Map<Id, Id> jsonAnswers = new Map<Id, Id>();
         jsonAnswers.put(question.id, option.id);
         
-        Object testAnswers = jsonAnswers;
+        String testAnswers = JSON.serialize(jsonAnswers);
         
         test.startTest();
         Boolean result = UnitService.saveAnswers(unit.Id, testAnswers);
@@ -106,7 +106,7 @@ public class UnitServiceTest {
         Map<Id, Id> jsonAnswers = new Map<Id, Id>();
         jsonAnswers.put(question.id, option.id);
         
-        Object testAnswers = jsonAnswers;
+       String testAnswers = JSON.serialize(jsonAnswers);
         
         test.startTest();
         Boolean result = UnitService.saveAnswers(unit.Id, testAnswers);
@@ -169,17 +169,17 @@ public class UnitServiceTest {
         );
         insert moduleResponse;
         
-        User_Respuesta__c questionResponse = new User_Respuesta__c(
+        /*User_Respuesta__c questionResponse = new User_Respuesta__c(
             Pregunta__c = question.id,
             Respuesta__c = wrongOption.id
         );
         insert questionResponse;
-        
+        */
         
         Map<Id, Id> jsonAnswers = new Map<Id, Id>();
         jsonAnswers.put(question.id, wrongOption.id);
         
-        Object testAnswers = jsonAnswers;
+        String testAnswers = JSON.serialize(jsonAnswers);
         
         test.startTest();
         Boolean result = UnitService.saveAnswers(unit.Id, testAnswers);
