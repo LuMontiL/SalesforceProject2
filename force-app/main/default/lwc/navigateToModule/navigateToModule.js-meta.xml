@@ -9,6 +9,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+        <!--This is the label of the recordId that will show when i select the component in the screen flow-->
             <property name="recordId" type="String" label="Selected module Id" 
                         description="Id of the current record"/>
         </targetConfig>

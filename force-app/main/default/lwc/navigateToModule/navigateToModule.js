@@ -2,7 +2,6 @@ import { LightningElement, api } from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 
 export default class NavigateToModule extends NavigationMixin(LightningElement) {
-
     @api recordId;
 
     handleNavigate(){
@@ -16,7 +15,4 @@ export default class NavigateToModule extends NavigationMixin(LightningElement) 
             }
         });
     }
-
-
-
 }
